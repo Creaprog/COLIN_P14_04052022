@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { states } from "./data";
 
-function Home() {
+function Home(props) {
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
     const [startDateBirth, setStartDateBirth] = useState(new Date());
@@ -18,17 +18,17 @@ function Home() {
 
     const handleSumbit = (e) => {
         e.preventDefault();
-        console.log(firstName);
-        console.log(lastName);
-        console.log(startDateBirth);
-        console.log(startDate);
-        console.log(street);
-        console.log(city);
-        console.log(stateUS);
-        console.log(zip);
-        console.log(department);
+        // console.log(firstName);
+        // console.log(lastName);
+        // console.log(startDateBirth);
+        // console.log(startDate);
+        // console.log(street);
+        // console.log(city);
+        // console.log(stateUS);
+        // console.log(zip);
+        // console.log(department);
 
-        const form = JSON.stringify({
+        const form = {
             firstName,
             lastName,
             startDateBirth,
@@ -38,14 +38,8 @@ function Home() {
             stateUS,
             zip,
             department
-        });
-        let data = [];
-        // setEmployees
-        data.push(JSON.parse(localStorage.getItem("data")));
-        data.push(form);
-        localStorage.setItem("data", data);
-        console.log(JSON.parse(localStorage.getItem("data")));
-        // TODO : J'ai un bug, ça n'ajoute pas...
+        };
+        props.setEmployees(form);
     }
 
     return (
@@ -74,7 +68,10 @@ function Home() {
                     <input id="city" type="text" onChange={(value) => setCity(value.target.value)} />
 
                     <label htmlFor="state">State</label>
-                    <select name="state" id="state" onChange={(value) => setStateUS(value.target.value)}>
+                    <select name="state" id="state" onChange={(value) => setStateUS(value.target.value)} defaultValue={"default"}>
+                        <option value={"default"} disabled>
+                            Choose an option
+                        </option>
                         {states.map((state) => (
                             <option key={state.abbreviation} value={state.abbreviation}> {state.name}</option>
                         ))}
@@ -84,8 +81,11 @@ function Home() {
                     <input id="zip-code" type="number" onChange={(value) => setZip(value.target.value)} />
                 </fieldset>
                 <label htmlFor="department">Department</label>
-                <select name="department" id="department" onChange={(value) => setDepartment(value.target.value)}>
+                <select name="department" id="department" onChange={(value) => setDepartment(value.target.value)} defaultValue={"default"}>
                     {/* // TODO : Bug car il faut mettre un default je crois sinon une erreur sur la console.log */}
+                    <option value={"default"} disabled>
+                        Choose an option
+                    </option>
                     <option>Sales</option>
                     <option>Marketing</option>
                     <option>Engineering</option>

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 function App() {
   const [employees, setEmployees] = useState([]);
+  console.log(employees);
   return (
     <Routes>
       <Route path="/" element={<Home setEmployees={setEmployees} />} />
