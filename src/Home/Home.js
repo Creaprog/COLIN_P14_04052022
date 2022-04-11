@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { states } from "./data";
+import Modal from "./Modal";
 
 function Home(props) {
     const [firstName, setFirstName] = useState();
@@ -15,6 +16,7 @@ function Home(props) {
     const [stateUS, setStateUS] = useState();
     const [zip, setZip] = useState();
     const [department, setDepartment] = useState();
+    const [isShowing, setIsShowing] = useState(false);
 
     const handleSumbit = (e) => {
         e.preventDefault();
@@ -40,6 +42,7 @@ function Home(props) {
             department
         };
         props.setEmployees(form);
+        setIsShowing(true);
     }
 
     return (
@@ -82,7 +85,6 @@ function Home(props) {
                 </fieldset>
                 <label htmlFor="department">Department</label>
                 <select name="department" id="department" onChange={(value) => setDepartment(value.target.value)} defaultValue={"default"}>
-                    {/* // TODO : Bug car il faut mettre un default je crois sinon une erreur sur la console.log */}
                     <option value={"default"} disabled>
                         Choose an option
                     </option>
@@ -94,6 +96,7 @@ function Home(props) {
                 </select>
                 <button type="submit">Save</button>
             </form>
+            <Modal isShowing={isShowing} setIsShowing={setIsShowing} />
         </div>
     );
 }
