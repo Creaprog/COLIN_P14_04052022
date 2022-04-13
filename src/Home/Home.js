@@ -15,7 +15,7 @@ function Home(props) {
     const [city, setCity] = useState();
     const [stateUS, setStateUS] = useState();
     const [zip, setZip] = useState();
-    const [department, setDepartment] = useState();
+    const [department, setDepartment] = useState("Sales");
     const [isShowing, setIsShowing] = useState(false);
 
     const handleSumbit = (e) => {
@@ -41,7 +41,10 @@ function Home(props) {
             zip,
             department
         };
-        props.setEmployees(form);
+        // props.setEmployees(form);
+        props.setEmployees((prevState) => {
+            return [...prevState, form]
+        });
         setIsShowing(true);
     }
 
@@ -68,8 +71,9 @@ function Home(props) {
                     <input id="street" type="text" onChange={(value) => setStreet(value.target.value)} />
 
                     <label htmlFor="city">City</label>
-                    <input id="city" type="text" onChange={(value) => setCity(value.target.value)} />
-
+                    <input id="city" type="text" value={city} onChange={(value) => setCity(value.target.value)} />
+                    <input id="city" type="text" />
+                    //TODO : Faire avec des refs et useRef
                     <label htmlFor="state">State</label>
                     <select name="state" id="state" onChange={(value) => setStateUS(value.target.value)} defaultValue={"default"}>
                         <option value={"default"} disabled>
@@ -84,15 +88,15 @@ function Home(props) {
                     <input id="zip-code" type="number" onChange={(value) => setZip(value.target.value)} />
                 </fieldset>
                 <label htmlFor="department">Department</label>
-                <select name="department" id="department" onChange={(value) => setDepartment(value.target.value)} defaultValue={"default"}>
-                    <option value={"default"} disabled>
+                <select name="department" id="department" onChange={(value) => setDepartment(value.target.value)} defaultValue={"Sales"}>
+                    {/* <option value={"default"} disabled>
                         Choose an option
-                    </option>
-                    <option>Sales</option>
-                    <option>Marketing</option>
-                    <option>Engineering</option>
-                    <option>Human Resources</option>
-                    <option>Legal</option>
+                    </option> */}
+                    <option value="Sales">Sales</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Legal">Legal</option>
                 </select>
                 <button type="submit">Save</button>
             </form>
