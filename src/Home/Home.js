@@ -1,4 +1,5 @@
 import HeaderHome from "./HeaderHome";
+
 import "./Home.css";
 import React, { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
@@ -7,16 +8,9 @@ import { states } from "./data";
 import Modal from "./Modal";
 
 function Home(props) {
-    // const [firstName, setFirstName] = useState();
-    // const [lastName, setLastName] = useState();
     const [startDateBirth, setStartDateBirth] = useState(new Date());
     const [startDate, setStartDate] = useState(new Date());
-    // const [street, setStreet] = useState();
-    // const [city, setCity] = useState();
-    // const [stateUS, setStateUS] = useState();
-    // const [zip, setZip] = useState();
-    // const [department, setDepartment] = useState();
-
+    const [isShowing, setIsShowing] = useState(false);
     const inputFirstName = useRef(null);
     const inputLastName = useRef(null);
     const inputStreet = useRef(null);
@@ -27,15 +21,6 @@ function Home(props) {
 
     const handleSumbit = (e) => {
         e.preventDefault();
-        // console.log(firstName);
-        // console.log(lastName);
-        // console.log(startDateBirth);
-        // console.log(startDate);
-        // console.log(street);
-        // console.log(city);
-        // console.log(stateUS);
-        // console.log(zip);
-        // console.log(department);
 
         const form = {
             firstName: inputFirstName.current.value,
@@ -81,10 +66,7 @@ function Home(props) {
                     <input id="city" type="text" ref={inputCity} />
 
                     <label htmlFor="state">State</label>
-                    <select name="state" id="state" ref={inputStateUS} defaultValue={"default"}>
-                        <option value={"default"} disabled>
-                            Choose an option
-                        </option>
+                    <select name="state" id="state" ref={inputStateUS} defaultValue={"AL"}>
                         {states.map((state) => (
                             <option key={state.abbreviation} value={state.abbreviation}> {state.name}</option>
                         ))}

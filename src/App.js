@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home setEmployees={setEmployees} />} />
-      <Route path="/employees" element={<ListEmployees employees={employees} />} />
+      <Route path="/employee" element={<ListEmployees employees={employees} />} />
     </Routes>
   );
 }
