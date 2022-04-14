@@ -4,12 +4,14 @@ import React, { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { states } from "./data";
+import Modal from "./Modal";
 
 function Home(props) {
     // const [firstName, setFirstName] = useState();
     // const [lastName, setLastName] = useState();
     const [startDateBirth, setStartDateBirth] = useState(new Date());
     const [startDate, setStartDate] = useState(new Date());
+<<<<<<< HEAD
     // const [street, setStreet] = useState();
     // const [city, setCity] = useState();
     // const [stateUS, setStateUS] = useState();
@@ -23,6 +25,14 @@ function Home(props) {
     const inputStateUS = useRef(null);
     const inputZip = useRef(null);
     const inputDepartment = useRef(null);
+=======
+    const [street, setStreet] = useState();
+    const [city, setCity] = useState();
+    const [stateUS, setStateUS] = useState();
+    const [zip, setZip] = useState();
+    const [department, setDepartment] = useState("Sales");
+    const [isShowing, setIsShowing] = useState(false);
+>>>>>>> fca8618b8d4ade1ee914a0514ccc2f21f5ec2f42
 
     const handleSumbit = (e) => {
         e.preventDefault();
@@ -47,6 +57,7 @@ function Home(props) {
             zip: inputZip.current.value,
             department: inputDepartment.current.value,
         };
+<<<<<<< HEAD
         // const form = {
         //     inputFirstName,
         //     lastName,
@@ -60,6 +71,13 @@ function Home(props) {
         // };
         console.log(form);
         props.setEmployees(form);
+=======
+        // props.setEmployees(form);
+        props.setEmployees((prevState) => {
+            return [...prevState, form]
+        });
+        setIsShowing(true);
+>>>>>>> fca8618b8d4ade1ee914a0514ccc2f21f5ec2f42
     }
 
     return (
@@ -85,8 +103,14 @@ function Home(props) {
                     <input id="street" type="text" ref={inputStreet} />
 
                     <label htmlFor="city">City</label>
+<<<<<<< HEAD
                     <input id="city" type="text" ref={inputCity} />
 
+=======
+                    <input id="city" type="text" value={city} onChange={(value) => setCity(value.target.value)} />
+                    <input id="city" type="text" />
+                    //TODO : Faire avec des refs et useRef
+>>>>>>> fca8618b8d4ade1ee914a0514ccc2f21f5ec2f42
                     <label htmlFor="state">State</label>
                     <select name="state" id="state" ref={inputStateUS} defaultValue={"default"}>
                         <option value={"default"} disabled>
@@ -101,19 +125,25 @@ function Home(props) {
                     <input id="zip-code" type="number" ref={inputZip} />
                 </fieldset>
                 <label htmlFor="department">Department</label>
+<<<<<<< HEAD
                 <select name="department" id="department" ref={inputDepartment} defaultValue={"default"}>
                     {/* // TODO : Bug car il faut mettre un default je crois sinon une erreur sur la console.log */}
                     <option value={"default"} disabled>
+=======
+                <select name="department" id="department" onChange={(value) => setDepartment(value.target.value)} defaultValue={"Sales"}>
+                    {/* <option value={"default"} disabled>
+>>>>>>> fca8618b8d4ade1ee914a0514ccc2f21f5ec2f42
                         Choose an option
-                    </option>
-                    <option>Sales</option>
-                    <option>Marketing</option>
-                    <option>Engineering</option>
-                    <option>Human Resources</option>
-                    <option>Legal</option>
+                    </option> */}
+                    <option value="Sales">Sales</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Legal">Legal</option>
                 </select>
                 <button type="submit">Save</button>
             </form>
+            <Modal isShowing={isShowing} setIsShowing={setIsShowing} />
         </div>
     );
 }
