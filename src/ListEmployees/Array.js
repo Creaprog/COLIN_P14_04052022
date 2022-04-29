@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable, useAsyncDebounce, useGlobalFilter, useSortBy, useFilters } from 'react-table'
-// import Moment from 'react-moment';
+import { useTable, usePagination, useAsyncDebounce, useGlobalFilter, useSortBy, useFilters } from 'react-table'
 // import { matchSorter } from 'match-sorter'
 
 const Styles = styled.div`
@@ -110,67 +109,128 @@ function Array(props) {
     []
   );
   const data = React.useMemo(() => props.employees, [props.employees])
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    preGlobalFilteredRows,
-    state,
-    setGlobalFilter,
-    prepareRow,
-  } = useTable({
-    columns,
-    data,
-  },
-    useFilters,
-    useGlobalFilter,
-    useSortBy
-  )
+  function Table({ columns, data }) {
 
-  return (
-    <>
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      rows,
+      preGlobalFilteredRows,
+      setGlobalFilter,
+      page,
+      canPreviousPage,
+      canNextPage,
+      pageOptions,
+      pageCount,
+      gotoPage,
+      nextPage,
+      previousPage,
+      setPageSize,
+      state: { pageIndex, pageSize },
+      state,
+      prepareRow,
+    } = useTable({
+      columns,
+      data,
+      initialState: { pageIndex: 2 },
+    },
+      useFilters,
+      useGlobalFilter,
+      useSortBy,
+      usePagination
+    )
+    return (
+      <>
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
 
-      <Styles>
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  })}
+        <Styles>
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </th>
+                  ))}
                 </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </Styles>
-    </>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row, i) => {
+                prepareRow(row)
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map(cell => {
+                      return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          <div className="pagination">
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              {'<<'}
+            </button>{' '}
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {'<'}
+            </button>{' '}
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {'>'}
+            </button>{' '}
+            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+              {'>>'}
+            </button>{' '}
+            <span>
+              Page{' '}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>{' '}
+            </span>
+            <span>
+              | Go to page:{' '}
+              <input
+                type="number"
+                defaultValue={pageIndex + 1}
+                onChange={e => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0
+                  gotoPage(page)
+                }}
+                style={{ width: '100px' }}
+              />
+            </span>{' '}
+            <select
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value))
+              }}
+            >
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
+        </Styles>
+      </>
+    )
+  }
+  return (
+    <Table columns={columns} data={data} />
   )
 }
 
