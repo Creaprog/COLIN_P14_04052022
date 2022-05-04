@@ -35,6 +35,7 @@ function Home(props) {
         };
         console.log(form);
         props.setEmployees((prevState) => {
+            localStorage.setItem("employees", JSON.stringify([...prevState, form]));
             return [...prevState, form]
         });
         setIsShowing(true);
@@ -51,10 +52,13 @@ function Home(props) {
                 <input type="text" id="last-name" ref={inputLastName} />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
-                <DatePicker selected={startDateBirth} onChange={(date) => setStartDateBirth(date.target.value)} />
+                <DatePicker dateFormat="dd/MM/yyyy" selected={startDateBirth} onChange={(date) => {
+                    console.log(typeof date);
+                    setStartDateBirth(date.toUTCString());
+                }} />
 
                 <label htmlFor="start-date">Start Date</label>
-                <DatePicker selected={startDate} onChange={(date) => setStartDate(date.target.value)} />
+                <DatePicker dateFormat="dd/MM/yyyy" selected={startDate} onChange={(date) => setStartDate(date.toUTCString())} />
 
                 <fieldset className="address">
                     <legend>Address</legend>

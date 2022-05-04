@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useTable, usePagination, useAsyncDebounce, useGlobalFilter, useSortBy, useFilters } from 'react-table'
 // import { matchSorter } from 'match-sorter'
+import { Link } from 'react-router-dom';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -77,18 +78,18 @@ function Array(props) {
         Header: 'Last Name',
         accessor: 'lastName',
       },
-      // {
-      //     Header: 'Start Date',
-      //     accessor: row => new Date(row.startDate),
-      // },
+      {
+        Header: 'Start Date',
+        accessor: 'startDate',
+      },
       {
         Header: 'Department',
         accessor: 'department',
       },
-      // {
-      //     Header: 'Date of Birth',
-      //     accessor: row => new Date(row.startDateBirth),
-      // },
+      {
+        Header: 'Date of Birth',
+        accessor: 'startDateBirth',
+      },
       {
         Header: 'Street',
         accessor: 'street',
@@ -115,7 +116,6 @@ function Array(props) {
       getTableProps,
       getTableBodyProps,
       headerGroups,
-      rows,
       preGlobalFilteredRows,
       setGlobalFilter,
       page,
@@ -127,24 +127,25 @@ function Array(props) {
       nextPage,
       previousPage,
       setPageSize,
-      state: { pageIndex, pageSize },
-      state,
+      // state,
+      state: { pageIndex, pageSize, globalFilter },
       prepareRow,
     } = useTable({
       columns,
       data,
-      initialState: { pageIndex: 2 },
+      initialState: { pageIndex: 0 },
     },
       useFilters,
       useGlobalFilter,
       useSortBy,
       usePagination
     )
+
     return (
       <>
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
+          globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
 
@@ -169,7 +170,7 @@ function Array(props) {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
+              {page.map((row, i) => {
                 prepareRow(row)
                 return (
                   <tr {...row.getRowProps()}>
@@ -179,6 +180,7 @@ function Array(props) {
                   </tr>
                 )
               })}
+
             </tbody>
           </table>
           <div className="pagination">
@@ -200,25 +202,13 @@ function Array(props) {
                 {pageIndex + 1} of {pageOptions.length}
               </strong>{' '}
             </span>
-            <span>
-              | Go to page:{' '}
-              <input
-                type="number"
-                defaultValue={pageIndex + 1}
-                onChange={e => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0
-                  gotoPage(page)
-                }}
-                style={{ width: '100px' }}
-              />
-            </span>{' '}
             <select
               value={pageSize}
               onChange={e => {
                 setPageSize(Number(e.target.value))
               }}
             >
-              {[10, 20, 30, 40, 50].map(pageSize => (
+              {[3, 10, 20, 30, 40, 50].map(pageSize => (
                 <option key={pageSize} value={pageSize}>
                   Show {pageSize}
                 </option>
@@ -226,6 +216,7 @@ function Array(props) {
             </select>
           </div>
         </Styles>
+        <Link to="/">Home</Link>
       </>
     )
   }
