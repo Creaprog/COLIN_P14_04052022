@@ -53,12 +53,13 @@ function Home(props) {
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
                 <DatePicker dateFormat="dd/MM/yyyy" selected={startDateBirth} onChange={(date) => {
-                    console.log(typeof date);
-                    setStartDateBirth(date.toUTCString());
+                    // console.log(typeof date);
+                    // setStartDateBirth(date.toUTCString());
+                    setStartDateBirth(date);
                 }} />
 
                 <label htmlFor="start-date">Start Date</label>
-                <DatePicker dateFormat="dd/MM/yyyy" selected={startDate} onChange={(date) => setStartDate(date.toUTCString())} />
+                <DatePicker dateFormat="dd/MM/yyyy" selected={startDate} onChange={(date) => setStartDate(date)} />
 
                 <fieldset className="address">
                     <legend>Address</legend>

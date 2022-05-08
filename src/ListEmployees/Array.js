@@ -80,7 +80,10 @@ function Array(props) {
       },
       {
         Header: 'Start Date',
-        accessor: 'startDate',
+        accessor: row => {
+          row.startDate = new Date(row.startDate);
+          return row.startDate.toLocaleDateString();
+        }
       },
       {
         Header: 'Department',
@@ -88,7 +91,10 @@ function Array(props) {
       },
       {
         Header: 'Date of Birth',
-        accessor: 'startDateBirth',
+        accessor: row => {
+          row.startDateBirth = new Date(row.startDateBirth);
+          return row.startDateBirth.toLocaleDateString();
+        }
       },
       {
         Header: 'Street',
