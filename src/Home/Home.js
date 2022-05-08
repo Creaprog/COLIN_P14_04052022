@@ -5,7 +5,8 @@ import React, { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { states } from "./data";
-import Modal from "./Modal";
+// import Modal from "./Modal";
+import Modal from "npm-modal-oc-creap";
 
 function Home(props) {
     const [startDateBirth, setStartDateBirth] = useState(new Date());
