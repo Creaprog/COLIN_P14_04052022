@@ -91,7 +91,7 @@ function Home(props) {
                 </select>
                 <button type="submit">Save</button>
             </form>
-            <Modal isShowing={isShowing} setIsShowing={setIsShowing} />
+            <Modal isShowing={isShowing} setIsShowing={setIsShowing} message="Employee Created!" />
         </div>
     );
 }
