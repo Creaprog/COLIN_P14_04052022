@@ -1,3 +1,7 @@
+<!-- TODO: Rendre la props modifiable.
+TODO: Resoudre le problème npm.
+TODO: Accessibilité résoudre le problème de la balise date. -->
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
