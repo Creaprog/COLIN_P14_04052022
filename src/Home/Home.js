@@ -54,8 +54,6 @@ function Home(props) {
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
                 <DatePicker dateFormat="dd/MM/yyyy" selected={startDateBirth} onChange={(date) => {
-                    // console.log(typeof date);
-                    // setStartDateBirth(date.toUTCString());
                     setStartDateBirth(date);
                 }} />
 
@@ -91,7 +89,7 @@ function Home(props) {
                 </select>
                 <button type="submit">Save</button>
             </form>
-            <Modal isShowing={isShowing} setIsShowing={setIsShowing} message="Employee Created!" />
+            <Modal isShowing={isShowing} setIsShowing={setIsShowing} message="" />
         </div>
     );
 }
