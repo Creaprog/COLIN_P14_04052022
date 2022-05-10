@@ -53,12 +53,12 @@ function Home(props) {
                 <input type="text" id="last-name" ref={inputLastName} />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
-                <DatePicker dateFormat="dd/MM/yyyy" selected={startDateBirth} onChange={(date) => {
+                <DatePicker id="date-of-birth" dateFormat="dd/MM/yyyy" selected={startDateBirth} onChange={(date) => {
                     setStartDateBirth(date);
                 }} />
 
                 <label htmlFor="start-date">Start Date</label>
-                <DatePicker dateFormat="dd/MM/yyyy" selected={startDate} onChange={(date) => setStartDate(date)} />
+                <DatePicker id="start-date" dateFormat="dd/MM/yyyy" selected={startDate} onChange={(date) => setStartDate(date)} />
 
                 <fieldset className="address">
                     <legend>Address</legend>
